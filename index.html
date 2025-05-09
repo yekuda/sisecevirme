@@ -100,7 +100,7 @@
 <body>
   <div class="container">
     <h2>Şişeyi Çevir</h2>
-    <p><strong>Oyuncular:</strong> <span id="count">0</span> <span style="color:red">*</span></p>
+    <p><strong>Oyuncular:</strong> <span id="count">0</span></p>
     <div id="playerList"></div>
     <input type="text" id="playerName" placeholder="Oyuncu İsmi">
     <button id="addBtn">Kişi Ekle</button>
@@ -136,8 +136,8 @@
     function updatePlayerList() {
       playerListDiv.innerHTML = `<strong>Oyuncular:</strong><br>`;
       players.sort(); // Sort players alphabetically
-      players.forEach((player, index) => {
-        playerListDiv.innerHTML += `${index + 1}. ${player}<br>`;
+      players.forEach((player) => {
+        playerListDiv.innerHTML += `${player}<br>`;
       });
     }
   </script>
