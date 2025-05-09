@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Şişeyi Çevir - Oyuncu Ekle</title>
+  <style>
+    body {
+      background-color: #121c2b;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: linear-gradient(145deg, #1f2a39, #2a3b4c);
+      padding: 30px;
+      border-radius: 15px;
+      width: 350px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .container:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      transform: scale(1.05);
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #e74c3c;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    span {
+      color: #f39c12;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      background-color: #2c3e50;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      background-color: #34495e;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+      font-weight: bold;
+    }
+
+    #addBtn {
+      background-color: #2ecc71;
+    }
+
+    #addBtn:hover {
+      background-color: #27ae60;
+    }
+
+    #startBtn {
+      background-color: #3498db;
+    }
+
+    #startBtn:hover {
+      background-color: #2980b9;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Şişeyi Çevir</h2>
+    <p><strong>Oyuncular (<span id="count">0</span>)</strong> <span style="color:red">*</span></p>
+    <div id="playerList"></div>
+    <input type="text" id="playerName" placeholder="Oyuncu İsmi">
+    <button id="addBtn">Kişi Ekle</button>
+    <button id="startBtn">Oyuna Başla</button>
+  </div>
+
+  <script>
+    let players = [];
+    const nameInput = document.getElementById("playerName");
+    const countDisplay = document.getElementById("count");
+    const playerListDiv = document.getElementById("playerList");
+
+    document.getElementById("addBtn").addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      if (name) {
+        players.push(name);
+        nameInput.value = "";
+        countDisplay.textContent = players.length;
+        localStorage.setItem("players", JSON.stringify(players));
+        updatePlayerList();
+      }
+    });
+
+    document.getElementById("startBtn").addEventListener("click", () => {
+      if (players.length < 2) {
+        alert("En az 2 oyuncu eklemelisiniz!");
+        return;
+      }
+      window.location.href = "oyun.html";
+    });
+
+    // Update the player list in the UI
+    function updatePlayerList() {
+      playerListDiv.innerHTML = `<strong>Oyuncular:</strong><br>`;
+      players.sort(); // Sort players alphabetically
+      players.forEach((player, index) => {
+        playerListDiv.innerHTML += `${index + 1}. ${player}<br>`;
+      });
+    }
+  </script>
+</body>
+</html>

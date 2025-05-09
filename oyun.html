@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Şişeyi Çevir - Oyun</title>
+  <style>
+    body {
+      background-color: #121c2b;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: linear-gradient(145deg, #1f2a39, #2a3b4c);
+      padding: 30px;
+      border-radius: 15px;
+      width: 350px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .container:hover {
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      transform: scale(1.05);
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #e74c3c;
+      text-transform: uppercase;
+    }
+
+    .player-list {
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 18px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: white;
+      font-weight: bold;
+    }
+
+    #spinBtn {
+      background-color: #2ecc71;
+    }
+
+    #spinBtn:hover {
+      background-color: #27ae60;
+    }
+
+    #backBtn {
+      background-color: #3498db;
+    }
+
+    #backBtn:hover {
+      background-color: #2980b9;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    span {
+      color: #f39c12;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Şişeyi Çevir</h2>
+    <div class="player-list" id="playerList"></div>
+    <div>
+      <p><strong>Soruyu Soran:</strong> <span id="asker">-</span></p>
+      <p><strong>Soruyu Cevaplayan:</strong> <span id="answerer">-</span></p>
+    </div>
+    <button id="spinBtn">Çevir</button>
+    <button id="backBtn">Başa Dön</button>
+  </div>
+
+  <script>
+    const players = JSON.parse(localStorage.getItem("players")) || [];
+    const askerSpan = document.getElementById("asker");
+    const answererSpan = document.getElementById("answerer");
+    const playerListDiv = document.getElementById("playerList");
+
+    if (players.length < 2) {
+      alert("Oyuncu sayısı yetersiz. Başlangıç sayfasına yönlendiriliyorsunuz.");
+      window.location.href = "index.html";
+    }
+
+    playerListDiv.innerHTML = `<strong>Oyuncular:</strong> ${players.join(", ")}`;
+
+    document.getElementById("spinBtn").addEventListener("click", () => {
+      let askerIndex, answererIndex;
+      do {
+        askerIndex = Math.floor(Math.random() * players.length);
+        answererIndex = Math.floor(Math.random() * players.length);
+      } while (askerIndex === answererIndex);
+
+      askerSpan.textContent = players[askerIndex];
+      answererSpan.textContent = players[answererIndex];
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
