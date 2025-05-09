@@ -100,7 +100,7 @@
 <body>
   <div class="container">
     <h2>Şişeyi Çevir</h2>
-    <p><strong>Oyuncular:</strong> <span id="count">0</span></p>
+    <p><strong>Oyuncular:</strong></p>
     <div id="playerList"></div>
     <input type="text" id="playerName" placeholder="Oyuncu İsmi">
     <button id="addBtn">Kişi Ekle</button>
@@ -110,7 +110,6 @@
   <script>
     let players = [];
     const nameInput = document.getElementById("playerName");
-    const countDisplay = document.getElementById("count");
     const playerListDiv = document.getElementById("playerList");
 
     document.getElementById("addBtn").addEventListener("click", () => {
@@ -118,7 +117,6 @@
       if (name) {
         players.push(name);
         nameInput.value = "";
-        countDisplay.textContent = players.length;
         localStorage.setItem("players", JSON.stringify(players));
         updatePlayerList();
       }
@@ -134,8 +132,7 @@
 
     // Update the player list in the UI
     function updatePlayerList() {
-      playerListDiv.innerHTML = `<strong>Oyuncular:</strong><br>`;
-      players.sort(); // Sort players alphabetically
+      playerListDiv.innerHTML = "";
       players.forEach((player) => {
         playerListDiv.innerHTML += `${player}<br>`;
       });
